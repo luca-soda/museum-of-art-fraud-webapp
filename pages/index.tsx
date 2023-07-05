@@ -14,11 +14,6 @@ export default function Home() {
   const [saved, setSaved] = useState(false);
   const [verified, setVerified] = useState(false);
 
-  useEffect(() => {
-    if (localStorage.getItem('jwt') != null)
-      setSaved(true)
-  }, []);
-
   return (
     <>
       <Head>

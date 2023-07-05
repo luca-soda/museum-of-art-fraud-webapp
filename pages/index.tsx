@@ -34,6 +34,9 @@ export default function Home() {
           });
           alert('Verified! Check out on the other service');
         }
+        else {
+          alert('wut');
+        }
       }} onError={function (error: Error): void {}} />
     </>
   )

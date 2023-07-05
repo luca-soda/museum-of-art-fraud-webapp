@@ -32,6 +32,7 @@ export default function Home() {
           axios.post(result, {
             jwt: localStorage.getItem('jwt')
           });
+          alert('Verified! Check out on the other service');
         }
       }} onError={function (error: Error): void {}} />
     </>

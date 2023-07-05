@@ -6,8 +6,19 @@ import styles from '@/styles/Home.module.css'
 const inter = Inter({ subsets: ['latin'] })
 
 import {QrScanner} from '@yudiel/react-qr-scanner';
+import { useEffect, useState } from 'react'
+import axios from 'axios';
 
 export default function Home() {
+
+  const [saved, setSaved] = useState(false);
+  const [verified, setVerified] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem('jwt') != null)
+      setSaved(true)
+  }, []);
+
   return (
     <>
       <Head>
@@ -16,7 +27,17 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <QrScanner onDecode={(result) => alert(result)} onError={function (error: Error): void {}} />
+      <QrScanner onDecode={(result) => {
+        if (!saved && result.startsWith('ey') && confirm('Vuoi salvare questa credenziale sul telefono?')) {
+          localStorage.setItem('jwt', result);
+        }
+        else if (result.startsWith('http') && !verified) {
+          axios.post(result, {
+            jwt: localStorage.getItem('jwt')
+          });
+          setVerified(true);
+        }
+      }} onError={function (error: Error): void {}} />
     </>
   )
 }

@@ -28,14 +28,12 @@ export default function Home() {
           localStorage.setItem('jwt', result);
         }
         else if (result.startsWith('http') && !verified) {
+          alert('!');
           setVerified(true);
           axios.post(result, {
             jwt: localStorage.getItem('jwt')
           });
           alert('Verified! Check out on the other service');
-        }
-        else {
-          alert('wut');
         }
       }} onError={function (error: Error): void {}} />
     </>
